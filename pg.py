@@ -15,20 +15,25 @@ async def send_welcome(message: types.Message):
 @dp.message_handler()
 async def echo(message: types.Message):
     if message.text.isdigit():
-        lower = 'abcdefghijklmnopqrstuvwxyz'
-        upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        numbers = '0123456789'
-        symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+        number = int(message.text)
+        if number <= 2:
+            await message.answer('Введите цифру больше 3')
+        elif number >= 31:
+            await message.answer("Введите цифру меньше 30")
+        else:
+            lower = 'abcdefghijklmnopqrstuvwxyz'
+            upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            numbers = '0123456789'
+            symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
 
+            all = lower + upper + numbers + symbols
+            length = int(message.text)
+            
+            password = ''.join(random.sample(all, length))
 
-        all = lower + upper + numbers + symbols
-        length = int(message.text)
-        
-        password = ''.join(random.sample(all, length))
-
-        await message.answer('Ваш новый пароль: ' + password)
+            await message.answer('Ваш новый пароль: ' + password)
     else:
-        await message.answer('Введите цифру обозначающую длину пароля от 1 до 30')
+        await message.answer('Введите цифру обозначающую длину пароля от 3 до 30')
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
