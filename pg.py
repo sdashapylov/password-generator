@@ -1,11 +1,13 @@
 import random
+import os
+from dotenv import load_dotenv
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 
-API_TOKEN = '2114579841:AAFRsgLhy200qbHs_WqD10HLVmJRFHGbs5A'
+load_dotenv()
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=API_TOKEN)
+bot = Bot(token=os.getenv('TELEGRAM_TOKEN'))
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start', 'help'])
